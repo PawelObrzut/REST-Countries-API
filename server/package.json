@@ -2,9 +2,12 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "start": "node dist/server.js",
+    "build": "tsc",
+    "dev": "nodemon server.ts"
   },
   "keywords": [],
   "author": "",
@@ -14,8 +17,14 @@
   },
   "devDependencies": {
     "@types/express": "^5.0.3",
+    "@types/jest": "^29.5.14",
     "@types/node": "^24.0.1",
+    "@types/supertest": "^6.0.3",
+    "jest": "^30.0.0",
     "nodemon": "^3.1.10",
+    "superagent": "^10.2.1",
+    "supertest": "^7.1.1",
+    "ts-jest": "^29.4.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   }
