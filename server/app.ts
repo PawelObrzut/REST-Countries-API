@@ -1,19 +1,22 @@
 import express from 'express';
-import { fetchAllCountries } from './services/fetchAllCountries'
+import cors from 'cors';
+import countriesRoute from './routes/countriesRoutes';
+import { getRootMessage } from './controllers/countriesController';
+import { errorHandler } from './middleware/errorHandler';
+import { CountryServiceError } from './utils/CountryServiceError';
 
 const app = express();
+app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(express.json());
 
-app.get('/', (_req, res) => {
-  res.status(200).send({message: 'resources available at /api/ routes'})
-})
+app.get('/', getRootMessage);
+app.use('/api', countriesRoute);
 
-app.get('/api/allCountries', async (_req, res) => {
-  try {
-    const payload = await fetchAllCountries();
-    res.status(200).send({payload})
-  } catch {
-    res.status(500).send({error: 'Error. Server not responding.'})
-  }
-})
+app.use((_req, _res, next) => {
+  const error = new CountryServiceError(404, 'This endpoint is not served');
+  next(error);
+});
+
+app.use(errorHandler);
 
 export default app

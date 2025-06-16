@@ -44,14 +44,26 @@ describe("GET /api/allCountries endpoint", () => {
   it("returns 500 and error message on failure", (done) => {
     jest
       .spyOn(fetchAllCountries, "fetchAllCountries")
-      .mockRejectedValue(new Error("Server mock failure"));
+      .mockRejectedValue(new Error());
 
     request(app)
       .get("/api/allCountries")
       .then((response) => {
         expect(response.statusCode).toBe(500);
-        expect(response.body.error).toBe("Error. Server not responding.");
+        expect(response.body.error).toBe("Internal Server Error");
         done();
       });
   });
 });
+
+describe("GET unserved endpoints", () => {
+  it("returns a CoutryServiceError", (done) => {
+    request(app)
+      .get("/anything")
+      .then((response) => {
+        expect(response.statusCode).toBe(404);
+        expect(response.body.error).toBe("This endpoint is not served");
+        done();
+      })
+  })
+})
