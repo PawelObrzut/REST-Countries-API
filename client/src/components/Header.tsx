@@ -11,8 +11,8 @@ const StyledHeader = styled.header`
   justify-content: space-between;
   align-items: center;
   padding: 3rem 1.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  background-color: ${({ theme }) => theme.headerBg};
+  box-shadow: 0 2px 8px var(--black10);
+  background-color: ${({ theme }) => theme.elementBg};
   color: ${({ theme }) => theme.text};
 `;
 
@@ -25,9 +25,6 @@ const ThemeToggle = styled.button`
   display: flex;
   align-items: center;
   gap: 0.25rem;
-  cursor: pointer;
-  background: none;
-  border: none;
   font-size: 1.1rem;
   color: ${({ theme }) => theme.text};
 `;

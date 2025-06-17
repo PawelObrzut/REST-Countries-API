@@ -8,6 +8,7 @@ const GlobalStyles = createGlobalStyle`
     --grey400: hsl(0, 0%, 50%);
     --grey50: hsl(0, 0%, 99%);
     --white: hsl(0, 100%, 100%);
+    --black10 : hsla(0, 0%, 0%, 0.1);
     --ff-nunito: "Nunito Sans", sans-serif;
     --fs-400: 1rem;
   }
@@ -24,11 +25,19 @@ const GlobalStyles = createGlobalStyle`
     font-size: var(--fs-400);
     background-color: ${({ theme }) => theme.bodyBg};
     color: ${({ theme }) => theme.text};
-
   }
 
   input, button, textarea, select {
     font: inherit;
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+
+  ul, ol {
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
   }
 `;
 
