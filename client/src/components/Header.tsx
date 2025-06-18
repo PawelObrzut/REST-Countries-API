@@ -31,7 +31,7 @@ const ThemeToggle = styled.button`
 
 const Header = ({ isDark, toggleTheme }: Props) => {
   return (
-    <StyledHeader>
+    <StyledHeader data-testid='header'>
       <Slogan>Where in the world?</Slogan>
       <ThemeToggle onClick={toggleTheme}>
         {isDark ? <IoSunnyOutline /> : <IoMoonOutline />}
