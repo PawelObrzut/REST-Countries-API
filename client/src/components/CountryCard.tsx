@@ -21,7 +21,7 @@ const CardContainer = styled.li`
 
   img {
   width: 100%;
-  aspect-ratio: 16/9;
+  aspect-ratio: 16/;
   max-height: 250px;
   object-fit: cover;
   display: block;

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ThemeProvider } from 'styled-components';
 import GlobalStyles from './styles/GlobalStyles';
 import Header from './components/Header';
@@ -30,9 +30,34 @@ const CountriesList = styled.ul`
   grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
 `
 
+type Country = {
+  flag: string,
+  name: string,
+  population: number,
+  region: string,
+  capital: string,
+}
+
 function App() {
   const [isDark, setIsDark] = useState(false);
   const toggleTheme = () => setIsDark((prev) => !prev);
+
+  const [countriesCollectionList, setCountriesCollectionList] = useState<Country[]>([])
+
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        const res = await fetch('http://localhost:3000/api/allCountries');
+        if (!res.ok) throw new Error(`Status: ${res.status}`);
+        const data = await res.json();
+        setCountriesCollectionList(data.payload);
+      } catch (err) {
+        console.error('Failed to fetch countries:', err);
+      }
+    };
+
+    fetchCountries();
+  }, []);
 
   return (
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
@@ -45,13 +70,11 @@ function App() {
 
         </ControlsWrapper>
         <CountriesList>
-          <CountryCard flag='https://flagcdn.com/de.svg' country='Germany' population={83240525} region='Europe' capital='Berlin' />
-          <CountryCard flag='https://flagcdn.com/de.svg' country='Germany' population={83240525} region='Europe' capital='Berlin' />
-          <CountryCard flag='https://flagcdn.com/de.svg' country='Germany' population={83240525} region='Europe' capital='Berlin' />
-          <CountryCard flag='https://flagcdn.com/de.svg' country='Germany' population={83240525} region='Europe' capital='Berlin' />
-          <CountryCard flag='https://flagcdn.com/de.svg' country='Germany' population={83240525} region='Europe' capital='Berlin' />
-          <CountryCard flag='https://flagcdn.com/de.svg' country='Germany' population={83240525} region='Europe' capital='Berlin' />
-
+          {
+            countriesCollectionList.map(({ flag, name, population, region, capital }) => (
+              <CountryCard key={name} flag={flag} country={name} population={population} region={region} capital={capital} />
+            ))
+          }
         </CountriesList>
       </main>
     </ThemeProvider>
