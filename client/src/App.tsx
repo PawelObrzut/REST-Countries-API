@@ -6,7 +6,7 @@ import { darkTheme, lightTheme } from './styles/themes';
 import { styled } from 'styled-components';
 import SearchInput from './components/SearchInput';
 import RegionFilterDropdown from './components/RegionFilterDropdown'
-
+import CountryCard from './components/CountryCard'
 
 const ControlsWrapper = styled.div`
   display: flex;
@@ -21,7 +21,13 @@ const ControlsWrapper = styled.div`
 `
 
 const CountriesList = styled.ul`
-  text-align: center;
+  text-align: left;
+  display: grid;
+  justify-content: center;
+  gap: 4rem;
+  padding: 0 2rem;
+  
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
 `
 
 function App() {
@@ -39,8 +45,13 @@ function App() {
 
         </ControlsWrapper>
         <CountriesList>
-          <li>Lorem ipsum dolor sit amet,</li>
-          <li>Lorem ipsum dolor sit amet,</li>
+          <CountryCard flag='https://flagcdn.com/de.svg' country='Germany' population={83240525} region='Europe' capital='Berlin' />
+          <CountryCard flag='https://flagcdn.com/de.svg' country='Germany' population={83240525} region='Europe' capital='Berlin' />
+          <CountryCard flag='https://flagcdn.com/de.svg' country='Germany' population={83240525} region='Europe' capital='Berlin' />
+          <CountryCard flag='https://flagcdn.com/de.svg' country='Germany' population={83240525} region='Europe' capital='Berlin' />
+          <CountryCard flag='https://flagcdn.com/de.svg' country='Germany' population={83240525} region='Europe' capital='Berlin' />
+          <CountryCard flag='https://flagcdn.com/de.svg' country='Germany' population={83240525} region='Europe' capital='Berlin' />
+
         </CountriesList>
       </main>
     </ThemeProvider>
