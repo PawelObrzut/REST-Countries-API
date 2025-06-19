@@ -1,4 +1,4 @@
-import React from 'react'
+import { Link } from 'react-router-dom';
 import { styled } from 'styled-components'
 
 type Props = {
@@ -18,14 +18,6 @@ const CardContainer = styled.li`
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-
-  img {
-  width: 100%;
-  aspect-ratio: 16/;
-  max-height: 250px;
-  object-fit: cover;
-  display: block;
-  }
 
   article {
     padding: 2rem;
@@ -48,15 +40,17 @@ const CardContainer = styled.li`
 
 const CountryCard = ({ flag, country, population, region, capital }: Props) => {
   return (
-    <CardContainer>
-      <img src={flag} alt={`Flag of ${country}`} />
-      <article>
-        <h2>{country}</h2>
-        <p><span>Population: </span>{population.toLocaleString()}</p>
-        <p><span>Region: </span>{region}</p>
-        <p><span>Capital: </span>{capital}</p>
-      </article>
-    </CardContainer>
+    <Link to={`/country/${country}`}>
+      <CardContainer>
+        <img src={flag} alt={`Flag of ${country}`} />
+        <article>
+          <h2>{country}</h2>
+          <p><span>Population: </span>{population.toLocaleString()}</p>
+          <p><span>Region: </span>{region}</p>
+          <p><span>Capital: </span>{capital}</p>
+        </article>
+      </CardContainer>
+    </Link>
   );
 }
 

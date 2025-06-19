@@ -39,6 +39,10 @@ const GlobalStyles = createGlobalStyle`
     padding: 0;
     list-style: none;
   }
+
+  a {
+    text-decoration: none;
+  }
 `;
 
 export default GlobalStyles;

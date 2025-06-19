@@ -26,7 +26,7 @@ const RegionFilter = styled.button`
   cursor: pointer;
 `;
 
-const ChevronIcon = styled(IoChevronDown)<{ open: boolean }>`
+const ChevronIcon = styled(IoChevronDown) <{ open: boolean }>`
   transition: transform 0.3s ease;
   transform: ${({ open }) => open ? 'rotate(180deg)' : 'rotate(0)'};
 `;
@@ -56,25 +56,47 @@ const RegionButton = styled.button`
 
   &:hover {
     background-color: ${({ theme }) => theme.bodyBg};
-    box-shadow: 0 2px 8px var(--black10);
+    box-shadow: 0 2px 8px var(--black10);§
   }
 `;
 
-const RegionFilterDropdown = () => {
+type Props = {
+  setRegion: React.Dispatch<React.SetStateAction<string>>
+}
+
+const RegionFilterDropdown = ({ setRegion }: Props) => {
   const [open, setOpen] = useState(false);
-  const regions = ['Africa', 'America', 'Asia', 'Europe', 'Oceania'];
+  const regions = ['Africa', 'Americas', 'Asia', 'Europe', 'Oceania'];
+
+  const handleRegionChange = (region: string) => {
+    setRegion(region);
+    setOpen(false);
+  }
 
   return (
     <RegionFilterWrapper>
-      <RegionFilter onClick={() => setOpen((prev) => !prev)}>
+      <RegionFilter 
+        onClick={() => setOpen((prev) => !prev)}
+        aria-expanded={open}
+        aria-controls='region-dropdown'
+        aria-haspopup='menu'
+      >
         Filter by Region
         <ChevronIcon open={open} />
       </RegionFilter>
 
       {open && (
-        <DropdownContainer open={open}>
+        <DropdownContainer 
+          open={open} 
+          role='menu' 
+          id='region-dropdown'
+        >
           {regions.map(region => (
-            <RegionButton key={region} >
+            <RegionButton 
+              key={region}
+              role='menuItem'
+              onClick={() => handleRegionChange(region)} 
+            >
               {region}
             </RegionButton>
           ))}

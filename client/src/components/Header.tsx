@@ -10,7 +10,7 @@ const StyledHeader = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 3rem 1.5rem;
+  padding: 3rem 2rem;
   box-shadow: 0 2px 8px var(--black10);
   background-color: ${({ theme }) => theme.elementBg};
   color: ${({ theme }) => theme.text};
