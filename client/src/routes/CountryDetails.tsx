@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { IoIosArrowRoundBack } from "react-icons/io";
+import CountryArticle from '../components/CountryArticle'
 
 const GoBackButton = styled.button`
   display: flex;
@@ -18,71 +19,45 @@ const DetailsWrapper = styled.div`
   margin: 4rem 2rem;
 `;
 
-const CountryContainer = styled.article`
-  margin-top: 3rem;
-  display: grid;
-  gap: 2rem;
-
-  @media screen and (min-width: 950px) {
-    grid-template-columns: 2fr 1fr 1fr;
-  }
-
-  img {
-    width: 100%;
-    max-height: 400px;
-    margin: 0 auto;
-    object-fit: contain;
-  }
-`;
-
-const Flag = styled.img`
-  @media screen and (min-width: 950px) {
-    grid-column: 1;
-    grid-row: 1 / span 3;
-  }
-`;
-
-const Name = styled.h1`
-  @media screen and (min-width: 950px) {
-    padding-top: 2rem;
-    grid-column: 2 / span 2;
-  }
-`;
-
-const PrimaryDetails = styled.section`
-  @media screen and (min-width: 950px) {
-    grid-column: 2;
-  }
-`;
-
-const SecondaryDetails = styled.section`
-  @media screen and (min-width: 950px) {
-    grid-column: 3;
-  }
-`;
-
-const Neighbours = styled.section`
-  @media screen and (min-width: 950px) {
-    grid-column: 2 / span 2;
-  }
-`;
+type CountryData = {
+  flag: string,
+  name: string,
+  nativeName: string,
+  topLevelDomain: string[],
+  population: number,
+  region: string,
+  subregion: string,
+  capital: string,
+  currencies: string[],
+  languages: string[],
+  borders: string[],
+}
 
 const CountryDetails = () => {
   const { name } = useParams();
+  const [data, setData] = useState<CountryData>()
 
-  const mockData = {
-    flag: "https://flagcdn.com/be.svg",
-    name: "Belgium",
-    "native name": "Belgie",
-    population: 11319511,
-    region: "Europe",
-    "sub region": "Western Europe",
-    capital: "Brussels",
-    "top lavel domain": ".be",
-    currencies: ["Euro"],
-    languages: ["Dutch", "French", "German"],
-    "border countries": ["France", "Germany", "Netherlands"]
-  };
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        const res = await fetch(`http://localhost:3000/api/${name}`);
+        if (!res.ok) throw new Error(`Status: ${res.status}`);
+        const response = await res.json();
+        setData(response.payload);
+      } catch (err) {
+        console.error('Failed to fetch countries:', err);
+      }
+    };
+
+    fetchCountries();
+  }, [name]);
+
+
+  if (!data) return (
+    <DetailsWrapper>
+      <p>Loading...</p>
+    </DetailsWrapper>
+  )
 
   return (
     <main>
@@ -93,26 +68,20 @@ const CountryDetails = () => {
           </GoBackButton>
         </Link>
 
-        <CountryContainer>
-          <Flag src={mockData.flag} alt={`Flag of ${mockData.name}`} />
-          <Name>{mockData.name}</Name>
-          <PrimaryDetails>
-            <p><strong>Native Name:</strong> {mockData['native name']}</p>
-            <p><strong>Population:</strong> {mockData.population.toLocaleString()}</p>
-            <p><strong>Region:</strong> {mockData.region}</p>
-            <p><strong>Sub Region:</strong> {mockData['sub region']}</p>
-            <p><strong>Capital:</strong> {mockData.capital}</p>
-          </PrimaryDetails>
-          <SecondaryDetails>
-            <p><strong>Top Level Domain:</strong> {mockData['top lavel domain']}</p>
-            <p><strong>Currencies:</strong> {mockData.currencies.join(', ')}</p>
-            <p><strong>Languages:</strong> {mockData.languages.join(', ')}</p>
-          </SecondaryDetails>
-          <Neighbours>
-            <p><strong>Border Countries:</strong></p>
-            <div>{mockData['border countries']}</div>
-          </Neighbours>
-        </CountryContainer>
+        <CountryArticle
+          flag={data.flag}
+          name={data.name}
+          nativeName={data.nativeName}
+          domain={data.topLevelDomain || []}
+          population={data.population}
+          region={data.region}
+          subRegion={data.subregion}
+          capital={data.capital}
+          currencies={data.currencies || []}
+          languages={data.languages || []}
+          neighbours={data.borders || []}
+        />
+
       </DetailsWrapper>
     </main>
   );
