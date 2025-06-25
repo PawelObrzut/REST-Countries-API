@@ -1,4 +1,4 @@
-import React from 'react'
+import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
 
 
@@ -100,7 +100,9 @@ const CountryArticle = ({ flag, name, nativeName, population, region, subRegion,
         <strong>Border Countries: </strong>
         {
           neighbours.map((neighbour) => (
-            <NeighbourButton key={neighbour}>{neighbour}</NeighbourButton>
+            <Link to={`/country/${neighbour}`}>
+              <NeighbourButton key={neighbour}>{neighbour}</NeighbourButton>
+            </Link>
           ))
         }
       </Neighbours>
