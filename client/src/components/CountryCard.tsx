@@ -18,6 +18,7 @@ const CardContainer = styled.li`
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+  max-width: 600px;
 
   article {
     padding: 2rem;
