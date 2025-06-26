@@ -31,11 +31,21 @@ const SearchIcon = styled(IoSearchSharp)`
   font-size: 1.25rem;
 `
 
-const SearchInput = () => {
+type Props = {
+  handleInputChange: (e) => void,
+  inputValue: string
+}
+
+const SearchInput = ({handleInputChange, inputValue}: Props) => {
   return (
     <SearchContainer>
       <SearchIcon />
-      <StyledInput type="text" placeholder="Search for a country..." />
+      <StyledInput 
+        type="text" 
+        placeholder="Search for a country..." 
+        onChange={handleInputChange} 
+        value={inputValue} 
+      />
     </SearchContainer>
   )
 }

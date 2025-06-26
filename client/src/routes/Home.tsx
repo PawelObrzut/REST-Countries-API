@@ -38,6 +38,11 @@ type Country = {
 const Home = () => {
   const [countriesCollectionList, setCountriesCollectionList] = useState<Country[]>([])
   const [region, setRegion] = useState<string>()
+  const [inputValue, setInputValue] = useState('')
+
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value)
+  }
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -57,7 +62,7 @@ const Home = () => {
   return (
     <main>
       <ControlsWrapper>
-        <SearchInput />
+        <SearchInput handleInputChange={handleInputChange} inputValue={inputValue}/>
         <RegionFilterDropdown setRegion={setRegion} />
 
       </ControlsWrapper>
@@ -65,6 +70,7 @@ const Home = () => {
         {
           countriesCollectionList
             .filter((country) => !region || country.region === region)
+            .filter((country) => country.name.toLowerCase().includes(inputValue.toLowerCase()))
             .map(({ flag, name, population, region, capital }) => (
               <CountryCard key={name} flag={flag} country={name} population={population} region={region} capital={capital} />
             ))
