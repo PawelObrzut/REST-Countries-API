@@ -4,13 +4,16 @@
     "module": "ESNext",
     "jsx": "react-jsx",
     "esModuleInterop": true,
-    "moduleResolution": "Bundler",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
+    "lib": ["ESNext", "DOM"],
     "types": [
+      "vite/client",
       "jest",
       "@testing-library/jest-dom",
       "node"
-    ]
+    ],
+    "skipLibCheck": true
   },
   "include": ["src"]
 }
