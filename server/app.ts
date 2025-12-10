@@ -7,7 +7,7 @@ import { errorHandler } from './middleware/errorHandler';
 import { CountryServiceError } from './utils/CountryServiceError';
 
 const app = express();
-app.use(cors({ origin: 'http://localhost:5173' }));
+app.use(cors({ origin: 'https://valiant-light-production-519e.up.railway.app' }));
 app.use(express.json());
 
 app.get('/', getRootMessage);
