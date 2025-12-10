@@ -40,7 +40,7 @@ const CountryDetails = () => {
   useEffect(() => {
     const fetchCountries = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/api/${name}`);
+        const res = await fetch(`https://rest-countries-api-production-f53c.up.railway.app/api/${name}`);
         if (!res.ok) throw new Error(`Status: ${res.status}`);
         const response = await res.json();
         setData(response.payload);

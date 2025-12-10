@@ -47,7 +47,7 @@ const Home = () => {
   useEffect(() => {
     const fetchCountries = async () => {
       try {
-        const res = await fetch('http://localhost:3000/api/allCountries');
+        const res = await fetch('https://rest-countries-api-production-f53c.up.railway.app/api/allCountries');
         if (!res.ok) throw new Error(`Status: ${res.status}`);
         const data = await res.json();
         setCountriesCollectionList(data.payload);
